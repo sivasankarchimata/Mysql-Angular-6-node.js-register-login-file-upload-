@@ -1,0 +1,207 @@
+<app-layout> </app-layout>
+
+<div style=" padding-bottom: 200px; margin-bottom: 15px;" class="container-fluid" >
+<div class="row">
+<div class="col-md-6 offset-md-3">
+    <h2>Register</h2>
+    <form  [formGroup]="registerForm" (ngSubmit)="onSubmit(registerForm)" >    
+
+            <!-- personal info -->
+        <div class="row" >
+            <div class="col">
+                <div class="form-group">
+                <label for="fnText">user Name</label>
+                <input type="text" class="form-control" formControlName="userName" id="fnText" placeholder="Enter user name"
+                [ngClass]="{'form-control': true,
+                    'is-invalid': !f.userName.valid && f.userName.touched,
+                    'is-valid':f.userName.valid}" >
+                <span *ngIf="f.userName.errors?.required && f.userName.touched" class="text-danger" >Field is required</span>
+                <div *ngIf="f.userName.errors?.minlength && f.userName.touched" class="text-danger" >UserName should be at least 4 characters.</div>
+                </div>
+            </div>
+        </div>
+        <div class="row" >
+            <div class="col">
+                <div class="form-group">
+                <label for="fnText">First Name</label>
+                <input type="text" class="form-control" formControlName="firstName" id="fnText" placeholder="Enter first name"
+                [ngClass]="{'form-control': true,
+                    'is-invalid': !f.firstName.valid && f.firstName.touched,
+                    'is-valid':f.firstName.valid}" >
+                <span *ngIf="f.firstName.errors?.required && f.firstName.touched" class="text-danger" >Field is required</span>
+                <div *ngIf="f.firstName.errors?.minlength && f.firstName.touched" class="text-danger" >Name should be at least 4 characters.</div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                <label for="lnText">Last Name</label>
+                <input type="text" class="form-control" formControlName="lastName" id="lnText" placeholder="Enter last name"
+                [ngClass]="{'form-control': true,
+                    'is-invalid': !f.lastName.valid && f.lastName.touched,
+                    'is-valid': f.lastName.valid}" >
+                <small *ngIf="f.lastName.errors?.required && f.lastName.touched" class="text-danger" >Field is required</small>
+                <small *ngIf="f.lastName.errors?.minlength && f.lastName.touched" class="text-danger" >Name should be at least 4 characters.</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- password info -->
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                <label for="pass">Password</label>
+                <input type="text" class="form-control" formControlName="password" id="pass" placeholder="Enter password"
+                [ngClass]="{'form-control': true,
+                    'is-invalid': !f.password.valid && f.password.touched,
+                    'is-valid': f.password.valid}" >
+                <small *ngIf="f.password.errors?.required && f.password.touched" class="text-danger" >Field is required</small>
+                <small *ngIf="f.password.errors?.minlength && f.password.touched" class="text-danger" >Name should be at least 4 characters.</small>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                <label for="cPass">Confirm Password</label>
+                <input type="text" class="form-control" formControlName="cPassword" id="cPass" placeholder="Enter confirm Password"
+                [ngClass]="{'form-control': true,
+                    'is-invalid': !f.cPassword.valid && f.cPassword.touched,
+                    'is-valid': f.cPassword.valid}" >
+                <span *ngIf="f.cPassword.errors?.confirmPassword && f.cPassword.touched" class="text-danger" >Password doesn't match .</span>
+                </div>
+            </div>
+        </div>
+    
+        <!-- seperator -->
+        <div class="row"> <hr> </div>
+
+        <!-- address form portion -->
+        <div class="row" formGroupName="address">
+        <div class="col-12">
+            <label for="" class="form-check-inline">Address Type</label>
+            <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" (change)="triggerExpiryValidator()"
+            [ngClass]="{'form-check-input': true,
+                'is-invalid': !addressType.valid && addressType.touched,
+                'is-valid': addressType.valid}"
+            formControlName="addressType" id="inlineRadio1" value="permanent">
+            <label class="form-check-label" for="inlineRadio1">Permanent</label>
+            </div>
+            <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" (change)="triggerExpiryValidator()"
+            [ngClass]="{'form-check-input': true,
+                'is-invalid': !addressType.valid && addressType.touched,
+                'is-valid': addressType.valid}"
+            formControlName="addressType" id="inlineRadio2" value="temporary">
+            <label class="form-check-label" for="inlineRadio2">Temporary</label>
+            </div>
+            <label class="form-check-inline" for="inlineRadio2" *ngIf="addressType?.value === 'temporary'">Expiry Date</label>
+            <div class="form-check form-check-inline" *ngIf="addressType?.value === 'temporary'">
+            <input type="date" 
+            [ngClass] = "{'form-control' : true,
+            'is-invalid' : !expiryDate.valid && expiryDate.touched,
+            'is-valid' : expiryDate.valid}" 
+            formControlName="expiryDate" id="dateInput1">
+            </div>
+            <small *ngIf="addressType.errors?.required && addressType.touched" class="text-danger" >Pick one option.</small>            
+            <small *ngIf="expiryDate.errors?.date_error && expiryDate.touched" class="text-danger" >{{expiryDate.errors?.date_error}}</small>            
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+            <label for="addText">Street Address</label>
+            <input type="text" class="form-control" id="addText" formControlName="streetAddress" placeholder="Enter street address"
+                [ngClass]="{'form-control': true,
+                'is-invalid': !streetAddress.valid && streetAddress.touched,
+                'is-valid': streetAddress.valid}" >
+            <small *ngIf="streetAddress.errors?.required && streetAddress.touched" class="text-danger" >Field is required</small>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="row">
+            <div class="col">
+                <div class="form-group">
+                <label for="state">State</label>
+                <select class="form-control" id="inputState" formControlName="state" [ngClass]="{'form-control': true,
+                    'is-invalid': !state.valid && state.touched,
+                    'is-valid': state.valid}"
+                    (change)="selectChangeHandler($event)" >
+                    <option selected [value]="null" disabled >Choose...</option>
+                    <option *ngFor="let state of states" [value]="state.state_id">{{state.state_name}}</option>
+                </select>
+                <small *ngIf="state.errors?.required && state.touched" class="text-danger" >Field is required</small>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                <label for="city">City</label>
+                <select class="form-control" id="inputCity" formControlName="city" [ngClass]="{'form-control': true,
+                    'is-invalid': !city.valid && city.touched,
+                    'is-valid': city.valid}">
+                    <option selected [value]="null" disabled >Choose...</option>
+                    <option *ngFor="let city of cities" [value]="city.city_id">{{city.city_name}}</option>
+                </select>
+                <small *ngIf="city.errors?.required && city.touched" class="text-danger" >Field is required</small>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                <label for="zipCode">Zip Code</label>
+                <input type="text" class="form-control" formControlName="zipCode" 
+                    [ngClass]="{'form-control': true,
+                'is-invalid': !zipCode.valid && zipCode.touched,
+                'is-valid': zipCode.valid}" id="zipCode" placeholder="Enter city">
+                <small *ngIf="zipCode.errors?.required && zipCode.touched" class="text-danger" >Field is required</small>
+                <small *ngIf="zipCode.errors?.pattern && zipCode.touched" class="text-danger" >Value should be 5 digit number</small>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+
+            <!-- seperator -->
+            <div class="row">
+            <div class="col">
+                <hr>
+            </div>
+            </div>
+
+<!--formGroupName="fruits" -->
+        
+
+         <div class="row" >
+            <div class="col-12">
+                    <div>
+                        <label for="" class="form-label">Favourite Food</label>
+                    </div>
+                    <div class="form-check form-check-inline" *ngFor="let control of fruitsArray.controls; let i = index;">
+                        <input class="form-check-input" type="checkbox"  
+                        (change)="getSelectedFruitsValue()" [formControl] = "control"
+                        id="inlineCheckbox{{i}}">
+                        <label class="form-check-label" for="inlineCheckbox{{i}}">{{ fruits[i].fruit_name }}</label>
+                    </div>
+                    <div>
+                        <small id="fnHelp" *ngIf="favFruitsError && checkFruitControlsTouched()" class="form-text custom-invalid-feedback">Atleast choose one</small>
+                    </div>
+                </div>
+        </div>
+
+            <!-- seperator -->
+            <div class="row"> <hr> </div>
+            <!-- final action buttons -->
+            <div class="row" >
+                <button type="submit" [disabled]="!registerForm.valid"  class="btn btn-primary">Submit</button>
+                <button type="reset" class="btn btn-warning">Reset</button>
+            <button type="button" class="btn btn-danger" routerLinkActive="active" routerLink="/login">Login</button> 
+            </div>
+    </form>
+</div>
+</div>
+</div>
+
+
+<br/>
+<br/>
+<br/>
+<br/>
+
+<!-- Code Ends Here -->
+
+

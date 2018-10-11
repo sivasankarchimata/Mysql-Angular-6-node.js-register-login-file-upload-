@@ -1,0 +1,58 @@
+
+<app-layout> </app-layout>
+
+<div style=" padding-bottom: 200px; margin-bottom: 15px;" class="container-fluid" >
+  <div class="row">
+  <div class="col-md-6 offset-md-3">
+    <h2>Login</h2>
+    <form  [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm)" >
+      <!-- personal info -->
+      <div class="row" >
+          <div class="col">
+              <div class="form-group">
+              <label for="fnText">user Name</label>
+              <input type="text" class="form-control" formControlName="userName" id="userName" name="userName" placeholder="Enter user name"
+              [ngClass]="{'form-control': true,
+                  'is-invalid': !f.userName.valid && f.userName.touched,
+                  'is-valid':f.userName.valid}" >
+              <span *ngIf="f.userName.errors?.required && f.userName.touched" class="text-danger" >Field is required</span>
+              <div *ngIf="f.userName.errors?.minlength && f.userName.touched" class="text-danger" >Name should be at least 4 characters.</div>
+              </div>
+          </div>
+      </div>
+
+          <!-- password info -->
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                <label for="pass">Password</label>
+                <input type="text" class="form-control" formControlName="password" id="password" name="password" placeholder="Enter password"
+                [ngClass]="{'form-control': true,
+                    'is-invalid': !f.password.valid && f.password.touched,
+                    'is-valid': f.password.valid}" >
+                <small *ngIf="f.password.errors?.required && f.password.touched" class="text-danger" >Field is required</small>
+                <small *ngIf="f.password.errors?.minlength && f.password.touched" class="text-danger" >Name should be at least 4 characters.</small>
+                </div>
+            </div>
+        </div>
+  
+      <!-- seperator -->
+      <div class="row">
+        <div class="col"> <hr>
+        </div>
+      </div>
+
+      <!-- final action buttons -->
+      <div class="row">
+          <button type="submit" [disabled]="!loginForm.valid"  class="btn btn-primary">Submit</button>
+          <button type="reset" class="btn btn-warning">Reset</button>
+          <button type="button" class="btn btn-danger" routerLinkActive="active" routerLink="/register">Register</button> 
+      </div>
+      
+    </form>
+  </div>
+  </div>
+</div>
+
+<app-alerts> </app-alerts>
+  

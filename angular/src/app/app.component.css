@@ -1,0 +1,10 @@
+
+input.ng-invalid.ng-touched{
+    border-color: red;
+}
+
+ button{
+    border: 1px;
+    padding-left: 1px;
+    margin-left: 1px;
+}
